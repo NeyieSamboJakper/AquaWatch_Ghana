@@ -1,20 +1,27 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Droplets, Eye, EyeOff, Loader2 } from 'lucide-react'
-import { toast } from 'sonner'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
+// Only same-site paths — `next` comes from the URL, so an absolute or
+// protocol-relative value (https://…, //…) must not become a redirect target
+function safeNextPath(value: string | null) {
+  if (!value || !value.startsWith('/') || value.startsWith('//') || value.startsWith('/\\')) {
+    return '/dashboard'
+  }
+  return value
+}
+
 function LoginForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const next = searchParams.get('next') ?? '/dashboard'
+  const next = safeNextPath(searchParams.get('next'))
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,9 +41,10 @@ function LoginForm() {
       setError(error.message)
       setLoading(false)
     } else {
-      toast.success('Signed in successfully.')
-      router.push(next)
-      router.refresh()
+      // Full page load, not router.push: in production the client router may
+      // hold a prefetched "redirect to login" for protected pages from while
+      // the user was signed out, which a client-side push would reuse.
+      window.location.assign(next)
     }
   }
 

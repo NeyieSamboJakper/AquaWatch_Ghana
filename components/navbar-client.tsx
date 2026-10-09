@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import {
   Droplets,
@@ -36,7 +36,6 @@ const baseNavLinks = [
 
 export function NavbarClient({ user, role }: NavbarClientProps) {
   const pathname = usePathname()
-  const router = useRouter()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const navLinks = !user
@@ -52,9 +51,8 @@ export function NavbarClient({ user, role }: NavbarClientProps) {
       toast.error('Failed to sign out.')
       return
     }
-    toast.success('Signed out successfully.')
-    router.push('/')
-    router.refresh()
+    // Full page load so no page prefetched while signed in is reused
+    window.location.assign('/')
   }
 
   return (
