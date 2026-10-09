@@ -7,10 +7,17 @@ __v0_jsx-dev-runtime.ts
 .vercel/
 next.user-config.*
 
-# Environment variables
+# Environment variables (copy .env.example to .env and fill it in)
+.env
 .env*.local
 
 # Common ignores
 node_modules
 .next/
 .DS_Store
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Personal Claude Code settings (shared settings live in .claude/settings.json)
+.claude/settings.local.json
