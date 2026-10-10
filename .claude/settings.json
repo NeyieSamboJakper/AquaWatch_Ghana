@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s -o /dev/null -w \"admin: %{http_code}\\\\n\" \"http://localhost:3000/admin?region=Ashanti&page=1\")",
+      "Bash(curl -s -o /dev/null -w \"filtered admin: %{http_code}\\\\n\" \"http://localhost:3000/admin?status=pending&q=water\")",
+      "Bash(curl -s -o /dev/null -w \"supabase status: %{http_code}\\\\n\" --max-time 10 \"https://jszmxiamvkotmiamvkotmiorykvg.supabase.co/auth/v1/health\")",
+      "Bash(curl -s -o /dev/null -w \"supabase auth health: %{http_code}\\\\n\" --max-time 10 \"https://jszmxiamvkotmiorykvg.supabase.co/auth/v1/health\")"
+    ]
+  }
+}

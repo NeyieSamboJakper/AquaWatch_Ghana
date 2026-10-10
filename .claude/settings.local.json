@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E '\\\\.\\(md|txt|yml|yaml|env\\)$')",
+      "Bash(npx tsc *)",
+      "Bash(nslookup jszmxiamvkotmiorykvg.supabase.co)",
+      "Read(//c/Users/PaaKwesiEphraim/Desktop/pwa-icons/**)",
+      "Bash(curl -s \"http://localhost:3000/manifest.webmanifest\")"
+    ]
+  }
+}
